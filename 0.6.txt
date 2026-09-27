@@ -1,0 +1,23 @@
+(press save btn) -> 
+    `
+        notes.push(note)                <- push to array
+        e.target.elements[0].value = "" 
+        redrawNotes()                   <- update list without server response
+        sendToServer(note)              <- server request
+    ` ->
+    js code send XMLHttpRequest: 
+    browser -> server: 
+        POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+        payload: {content: "123", date: "2026-09-27T14:22:27.688Z"}
+
+        
+(server save note) server -> browser: 
+    201 Created 
+    content-type: application/json; charset=utf-8 
+    data: {message: "note created"}
+
+    xhttpForPost.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 201) {
+            console.log(this.responseText)     <- in console: {"message":"note created"}
+        }
+    }
